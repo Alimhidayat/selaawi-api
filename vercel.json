@@ -1,0 +1,21 @@
+{
+    "version": 2,
+    "builds": [
+      {
+        "src": "app/__init__.py",
+        "use": "@vercel/python"
+      }
+    ],
+    "routes": [
+      {
+        "src": "/dashboard/dataApi1",
+        "dest": "app/blueprints/dashboard/bp_dashboard.py",
+        "methods": ["GET"]
+      },
+      {
+        "src": "/real-time/dataApi2\\?start_date=(.*)&end_date=(.*)",
+        "dest": "app/blueprints/real_time/real_time.py?start_date=$1&end_date=$2",
+        "methods": ["GET"]
+      }
+    ]
+  }
