@@ -7,3 +7,4 @@ migrations/
 .idea
 .git
 .pytest_cache
+.vercel
