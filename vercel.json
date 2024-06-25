@@ -1,20 +1,5 @@
 {
     "version": 2,
-    "builds": [
-        {
-            "src": "app/__init__.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "app/blueprints/dashboard/bp_dashboard.py",
-            "use": "@vercel/python"
-        },
-        {
-            "src": "app/blueprints/real_time/real_time.py",
-            "use": "@vercel/python"
-        },
-        { "src": "app/**/requirements.txt", "use": "@vercel/python" }
-    ],
     "routes": [
       {
         "src": "/(.*)",
