@@ -2,10 +2,6 @@
     "version": 2,
     "routes": [
       {
-        "src": "/(.*)",
-        "dest": "app/__init__.py"
-      },
-      {
         "src": "/dashboard/dataApi1",
         "dest": "app/blueprints/dashboard/bp_dashboard.py",
         "methods": ["GET"]

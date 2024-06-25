@@ -16,23 +16,27 @@ from app.blueprints.dashboard.bp_dashboard import dashboard, addDataDashboard
 
 
 
-def create_app():
-    app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///selaawi.db'
 
-    # db = SQLAlchemy(app)
-    db.init_app(app)
-    migrate = Migrate(app, db)
+app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///selaawi.db'
 
-    @app.route('/')
-    def index():
-        return {"message": "Hello World"}
-    app.register_blueprint(realTime)
-    app.register_blueprint(dashboard)
+# db = SQLAlchemy(app)
+db.init_app(app)
+migrate = Migrate(app, db)
+
+@app.route('/')
+def index():
+    # mengembalikan nilai json halaman utama
+    return {"message": "Hello World"}
+app.register_blueprint(realTime)
+app.register_blueprint(dashboard)
 
 
-    with app.app_context():
-        Thread(target=addDataDashboard).start()
-        Thread(target=addDataRealTime).start()
+with app.app_context():
+    Thread(target=addDataDashboard).start()
+    Thread(target=addDataRealTime).start()
     
-    return app
+
+
+if __name__ == '__main__':
+    app.run(debug=True)
