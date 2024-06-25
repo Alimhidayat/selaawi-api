@@ -15,13 +15,6 @@ import app
 dashboard = Blueprint('dashboard', __name__)
 
 
-@dashboard.route('/dashboard')
-def showDashboard():
-    return "Dashboard"
-
-def nilaiRandom():
-    return random.uniform(5, 20)
-
 def addDataDashboard():
     with app.app.app_context():
         print("Starting addDataDashboard")

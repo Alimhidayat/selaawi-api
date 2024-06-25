@@ -8,6 +8,11 @@
     ],
     "routes": [
       {
+        "src": "/(.*)",
+        "dest": "app/__init__.py", 
+        "methods": ["GET"]
+      },
+      {
         "src": "/dashboard/dataApi1",
         "dest": "app/blueprints/dashboard/bp_dashboard.py",
         "methods": ["GET"]

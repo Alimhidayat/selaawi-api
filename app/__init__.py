@@ -24,6 +24,9 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///selaawi.db'
 db.init_app(app)
 migrate = Migrate(app, db)
 
+@app.route('/')
+def index():
+    return {"message": "Hello World"}
 app.register_blueprint(realTime)
 app.register_blueprint(dashboard)
 
