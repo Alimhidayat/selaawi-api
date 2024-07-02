@@ -3,9 +3,10 @@ venv/
 __pycache__/
 *.pyc
 .vscode
-migrations/
+# migrations/
 *.sqlite
 .idea
 .git
 .pytest_cache
 .vercel
+instance/

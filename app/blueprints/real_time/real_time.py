@@ -42,8 +42,8 @@ def getDataRealTime():
         return jsonify({"error": "Tolong masukan tanggal awal dan tanggal akhir"})
     
     try:
-        datetime.strptime(start_date, "%Y-%m-%d %H:%M:%S")
-        datetime.strptime(end_date, "%Y-%m-%d %H:%M:%S")
+        datetime.strptime(start_date, "%Y-%m-%d %H:%M")
+        datetime.strptime(end_date, "%Y-%m-%d %H:%M")
     except ValueError as e:
         return jsonify({"error": str(e)}), 400
     
@@ -63,17 +63,28 @@ def getDataRealTime():
     
     dataRealtime = RealTime.query.filter(RealTime.timeStamp >= start_date, RealTime.timeStamp <= end_date).all()
     
-    
-    avgDataRealTime = {
-        "hum": sum([item.hum for item in dataRealtime]) / len(dataRealtime),
-        "soil_nitro": sum([item.soil_nitro for item in dataRealtime]) / len(dataRealtime),
-        "soil_phos": sum([item.soil_phos for item in dataRealtime]) / len(dataRealtime),
-        "soil_pot": sum([item.soil_pot for item in dataRealtime]) / len(dataRealtime),
-        "soil_temp": sum([item.soil_temp for item in dataRealtime]) / len(dataRealtime),
-        "soil_ph": sum([item.soil_ph for item in dataRealtime]) / len(dataRealtime),
-        "temp": sum([item.temp for item in dataRealtime]) / len(dataRealtime)
+    # dataRealtime = [{key: value for key, value in item.__dict__.items() if not key.startswith('_sa_')} for item in dataRealtime]
+    dataRealtime = [
+    {
+        key: round(value, 2) if isinstance(value, float) and key not in ['id_realtime', 'timestamp'] else value
+        for key, value in item.__dict__.items() if not key.startswith('_sa_')
     }
+    for item in dataRealtime
+]
+    return jsonify(dataRealtime)
+
     
-    avgDataRealTimetoJson = {key: value for key, value  in avgDataRealTime.items() if not key.startswith('_sa_')}
-    print(avgDataRealTimetoJson)
-    return jsonify(avgDataRealTimetoJson)    
+    
+    # avgDataRealTime = {
+    #     "hum": sum([item.hum for item in dataRealtime]) / len(dataRealtime),
+    #     "soil_nitro": sum([item.soil_nitro for item in dataRealtime]) / len(dataRealtime),
+    #     "soil_phos": sum([item.soil_phos for item in dataRealtime]) / len(dataRealtime),
+    #     "soil_pot": sum([item.soil_pot for item in dataRealtime]) / len(dataRealtime),
+    #     "soil_temp": sum([item.soil_temp for item in dataRealtime]) / len(dataRealtime),
+    #     "soil_ph": sum([item.soil_ph for item in dataRealtime]) / len(dataRealtime),
+    #     "temp": sum([item.temp for item in dataRealtime]) / len(dataRealtime)
+    # }
+    
+    # avgDataRealTimetoJson = {key: value for key, value  in avgDataRealTime.items() if not key.startswith('_sa_')}
+    # print(avgDataRealTimetoJson)
+    # return jsonify(avgDataRealTimetoJson)    

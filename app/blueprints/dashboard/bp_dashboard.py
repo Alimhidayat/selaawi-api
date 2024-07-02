@@ -54,7 +54,17 @@ def getDataDashboard():
     # dataDashboard = db.session.execute(db.select(Dashboard).order_by(Dashboard.timeStamp.desc()).limit(1)).scalar_one()
     dataDashboard = Dashboard.query.order_by(Dashboard.timeStamp.desc()).first()
     # # change to json
-    dataDashboard = {key: value for key, value in dataDashboard.__dict__.items() if not key.startswith('_sa_')}
+    # dataDashboard = {key: value for key, value in dataDashboard.__dict__.items() if not key.startswith('_sa_')}
+    dataDashboard = {
+        key: round(value, 2) if isinstance(value, float) and key not in ['id_dashboard', 'timeStamp'] else value
+        for key, value in dataDashboard.__dict__.items() if not key.startswith('_sa_')
+    }
+    # dataRealtime = [
+    # {
+    #     key: round(value, 2) if isinstance(value, float) and key not in ['id_realtime', 'timestamp'] else value
+    #     for key, value in item.__dict__.items() if not key.startswith('_sa_')
+    # }
+    # ]
     print(dataDashboard)
     return jsonify(dataDashboard)
     
